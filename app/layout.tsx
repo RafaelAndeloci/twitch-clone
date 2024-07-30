@@ -9,6 +9,8 @@ import {
   SignInButton,
   SignOutButton,
 } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +25,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl={"/"}>
+    <ClerkProvider appearance={{ baseTheme: dark }} afterSignOutUrl={"/"}>
       <html lang="en">
-        <body className={cn(inter.className, "antialiased")}>{children}</body>
+        <body className={cn(inter.className, "antialiased")}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
